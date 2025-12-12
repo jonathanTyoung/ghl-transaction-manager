@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getSupabaseAdmin } from "@/lib/supabase";  // ← ADD THIS LINE
 
 export async function POST(request: NextRequest) {
   try {
@@ -11,7 +12,7 @@ export async function POST(request: NextRequest) {
     const payload = await request.json();
     console.log("📨 Webhook received:", payload.type);
 
-    const supabaseAdmin = getSupabaseAdmin(); // ← Get admin client here
+    const supabaseAdmin = getSupabaseAdmin(); // ← Now this will work!
 
     if (
       payload.type === "opportunity.stage_change" &&

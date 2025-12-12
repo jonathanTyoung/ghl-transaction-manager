@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import TransactionList from '@/components/transactions/TransactionList';
 import { GHLContext } from '@/lib/types';
 
-export default function Home() {
+function HomeContent() {
   const searchParams = useSearchParams();
   const [context, setContext] = useState<GHLContext | null>(null);
   
@@ -43,5 +43,17 @@ export default function Home() {
         locationId={context.locationId}
       />
     </main>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-screen">
+        <div>Loading...</div>
+      </div>
+    }>
+      <HomeContent />
+    </Suspense>
   );
 }
